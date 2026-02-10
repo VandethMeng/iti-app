@@ -1,0 +1,162 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                          POSTMAN QUICK REFERENCE                          ║
+║                   Testing: GET /api/auth/me with JWT Token                ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+REQUEST 1: LOGIN (Get Token)
+────────────────────────────
+
+Method:   POST
+URL:      http://localhost:8080/api/auth/login
+
+Headers:
+  Content-Type: application/json
+
+Body (raw JSON):
+  {
+    "email": "test@example.com",
+    "password": "Password123"
+  }
+
+Expected Response:
+  Status: 200 OK
+
+  {
+    "accessToken": "eyJhbGc...",
+    "refreshToken": "eyJhbGc...",
+    "tokenType": "Bearer",
+    "expiresIn": 86400000,
+    "user": {...}
+  }
+
+ACTION: Copy the "accessToken" value
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+REQUEST 2: TEST /api/auth/me (Get User Profile)
+────────────────────────────────────────────────
+
+Method:   GET
+URL:      http://localhost:8080/api/auth/me
+
+Headers:
+  Content-Type: application/json
+  Authorization: Bearer {PASTE_TOKEN_HERE}
+
+Body: NONE (empty - this is a GET request)
+
+Expected Response:
+  Status: 200 OK
+
+  {
+    "id": "user_id_here",
+    "email": "test@example.com",
+    "firstName": "Test",
+    "lastName": "User",
+    "phoneNumber": "+1234567890",
+    "address": "123 Main St",
+    "enabled": true,
+    "createdAt": "2026-02-08T14:00:00",
+    "roles": ["STUDENT"]
+  }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚡ COPY-PASTE READY:
+
+LOGIN REQUEST BODY:
+──────────────────
+{
+  "email": "test@example.com",
+  "password": "Password123",
+  "firstName": "Test",
+  "lastName": "User",
+  "phoneNumber": "+1234567890",
+  "address": "123 Main St",
+  "role": "STUDENT"
+}
+
+Or if user exists:
+{
+  "email": "test@example.com",
+  "password": "Password123"
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+POSTMAN AUTHORIZATION TAB METHOD (Easiest):
+───────────────────────────────────────────
+
+For /api/auth/me request:
+
+1. Click "Authorization" tab
+2. Select "Bearer Token" from dropdown
+3. Paste token in "Token" field
+4. Postman adds header automatically!
+5. Click Send
+
+No need to manually type Authorization header!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+COMMON HEADER VALUES:
+────────────────────
+
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzcwNTgyNjg0LCJleHAiOjE3NzA2NjkwODR9.na3ZnOpD63wpv_Llq8KygUeaNABNec3jUiCt_seF9f-ZMXWY2pbn_bKKilSPzvJHxx52nhmBvFAdh6bRZxfz2w
+
+Content-Type: application/json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TROUBLESHOOTING:
+────────────────
+
+❌ 401 Unauthorized
+   → Token expired (24 hours)
+   → Solution: Login again
+
+❌ 404 Not Found
+   → Wrong URL (check spelling)
+   → Solution: Use http://localhost:8080/api/auth/me
+
+❌ Cannot GET /api/auth/me
+   → Using POST instead of GET
+   → Solution: Change method to GET
+
+❌ Missing header
+   → Authorization header not added
+   → Solution: Add Authorization: Bearer {token}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WORKFLOW SUMMARY:
+─────────────────
+
+1. POST /auth/login
+   ↓
+2. Copy accessToken
+   ↓
+3. GET /auth/me with Bearer token
+   ↓
+4. Status 200 OK + User data ✅
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+KEY POINTS:
+───────────
+
+✅ /api/auth/me is a GET request
+✅ Requires Bearer token in Authorization header
+✅ Token format: "Bearer {long_token_string}"
+✅ Status code should be 200 OK
+✅ Response contains user profile
+✅ Token valid for 24 hours
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+See POSTMAN_TESTING_GUIDE.md for detailed step-by-step instructions!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

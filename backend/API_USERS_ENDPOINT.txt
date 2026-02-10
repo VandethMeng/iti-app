@@ -1,0 +1,187 @@
+✅ NEW ENDPOINT CREATED: GET /api/users
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILES CREATED:
+
+1. UserController.java
+   Location: src/main/java/edu/iti/schoolmis/controller/UserController.java
+
+   Endpoints:
+   - GET /api/users              → Get ALL users with their roles
+   - GET /api/users/{id}         → Get specific user by ID
+   - GET /api/users/role/{role}  → Get users by specific role
+
+2. UserService.java
+   Location: src/main/java/edu/iti/schoolmis/service/UserService.java
+
+   Methods:
+   - getAllUsers()               → Returns list of all users
+   - getUsersByRole()            → Returns users filtered by role
+   - getUserById()               → Returns specific user by ID
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ENDPOINT DETAILS:
+
+1. GET /api/users
+   ────────────────
+   Description: Returns all users with their roles
+
+   Response (200 OK):
+   [
+     {
+       "id": "user_id_1",
+       "email": "admin@example.com",
+       "firstName": "Admin",
+       "lastName": "User",
+       "phoneNumber": "+1234567890",
+       "address": "123 Admin St",
+       "enabled": true,
+       "createdAt": "2026-02-08T10:00:00",
+       "updatedAt": "2026-02-08T10:00:00",
+       "roles": ["ADMIN"]
+     },
+     {
+       "id": "user_id_2",
+       "email": "student@example.com",
+       "firstName": "John",
+       "lastName": "Student",
+       "phoneNumber": "+1987654321",
+       "address": "456 Student Ave",
+       "enabled": true,
+       "createdAt": "2026-02-08T11:00:00",
+       "updatedAt": "2026-02-08T11:00:00",
+       "roles": ["STUDENT"]
+     },
+     {
+       "id": "user_id_3",
+       "email": "teacher@example.com",
+       "firstName": "Jane",
+       "lastName": "Teacher",
+       "phoneNumber": "+1111111111",
+       "address": "789 Teacher Blvd",
+       "enabled": true,
+       "createdAt": "2026-02-08T12:00:00",
+       "updatedAt": "2026-02-08T12:00:00",
+       "roles": ["TEACHER"]
+     }
+   ]
+
+2. GET /api/users/{id}
+   ───────────────────
+   Example: GET /api/users/65a1b2c3d4e5f6...
+
+   Response (200 OK):
+   {
+     "id": "65a1b2c3d4e5f6...",
+     "email": "user@example.com",
+     "firstName": "John",
+     "lastName": "Doe",
+     "phoneNumber": "+1234567890",
+     "address": "123 Main St",
+     "enabled": true,
+     "createdAt": "2026-02-08T10:00:00",
+     "roles": ["STUDENT"]
+   }
+
+3. GET /api/users/role/{role}
+   ──────────────────────────
+   Example: GET /api/users/role/STUDENT
+
+   Valid roles:
+   - STUDENT
+   - TEACHER
+   - ENROLLMENT_OFFICER
+   - ADMIN
+
+   Response (200 OK):
+   [
+     {
+       "id": "user_id_2",
+       "email": "student@example.com",
+       "firstName": "John",
+       "lastName": "Student",
+       "roles": ["STUDENT"]
+     }
+   ]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HOW TO USE:
+
+1. REBUILD BACKEND:
+   ─────────────────
+   Run: mvn clean install -DskipTests
+
+   Or just double-click: RUN_BACKEND.bat
+   (It will recompile automatically)
+
+2. TEST THE ENDPOINT:
+   ──────────────────
+   Option A: Browser
+   Open: http://localhost:8080/api/users
+
+   Option B: Postman
+   Method: GET
+   URL: http://localhost:8080/api/users
+
+   Option C: curl
+   curl http://localhost:8080/api/users
+
+3. EXPECTED RESPONSE:
+   ──────────────────
+   Status: 200 OK
+   Body: Array of all users with their roles
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DATA STRUCTURE:
+
+Users Collection (MongoDB):
+├── id (String) - MongoDB ID
+├── email (String) - User email
+├── password (String) - BCrypt encrypted
+├── firstName (String)
+├── lastName (String)
+├── phoneNumber (String)
+├── address (String)
+├── enabled (Boolean)
+├── roles (Set<Role>) - STUDENT, TEACHER, ENROLLMENT_OFFICER, ADMIN
+├── createdAt (DateTime)
+└── updatedAt (DateTime)
+
+Students Collection (MongoDB):
+├── id (String) - MongoDB ID
+├── userId (String) - Link to User
+├── studentId (String) - Student ID
+├── dateOfBirth (LocalDate)
+├── gender (String)
+├── parentName (String)
+├── ...other fields
+
+Teachers Collection (MongoDB):
+├── id (String) - MongoDB ID
+├── userId (String) - Link to User
+├── teacherId (String) - Teacher ID
+├── department (String)
+├── specialization (String)
+├── ...other fields
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TOTAL API ENDPOINTS NOW: 92 + 3 = 95
+
+New User Management Endpoints:
+✅ GET /api/users               (Get all users with roles)
+✅ GET /api/users/{id}         (Get user by ID)
+✅ GET /api/users/role/{role}  (Get users by role)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STATUS: ✅ READY
+
+The /api/users endpoint is now available to fetch all users with their roles!
+
+Rebuild backend and test the endpoint!
+
