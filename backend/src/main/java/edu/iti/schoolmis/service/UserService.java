@@ -63,8 +63,14 @@ public class UserService {
         response.setAddress(user.getAddress());
         response.setEnabled(user.isEnabled());
         response.setCreatedAt(user.getCreatedAt());
-        response.setUpdatedAt(user.getUpdatedAt());
-        response.setRoles(user.getRoles());
+
+        // Convert roles to string set
+        if (user.getRoles() != null) {
+            response.setRoles(user.getRoles().stream()
+                    .map(Enum::name)
+                    .collect(Collectors.toSet()));
+        }
+
         return response;
     }
 }
