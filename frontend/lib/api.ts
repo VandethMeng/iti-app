@@ -320,6 +320,12 @@ class ApiClient {
     return this.request<Course>(`/courses/${id}`);
   }
 
+  async getAllCourses(): Promise<Course[]> {
+    // TODO: Backend needs to implement GET /api/courses endpoint
+    // For now, returning empty array to allow build to complete
+    return Promise.resolve([]);
+  }
+
   async getCoursesByTeacher(teacherId: string): Promise<Course[]> {
     return this.request<Course[]>(`/courses/teacher/${teacherId}`);
   }

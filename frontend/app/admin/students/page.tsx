@@ -50,9 +50,9 @@ export default function AdminStudentsPage() {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
         (student) =>
-          student.firstName.toLowerCase().includes(query) ||
-          student.lastName.toLowerCase().includes(query) ||
-          student.email.toLowerCase().includes(query) ||
+          student.user?.firstName?.toLowerCase().includes(query) ||
+          student.user?.lastName?.toLowerCase().includes(query) ||
+          student.user?.email?.toLowerCase().includes(query) ||
           student.studentId.toLowerCase().includes(query),
       );
     }
@@ -230,16 +230,17 @@ export default function AdminStudentsPage() {
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
                           <span className="text-blue-600 font-semibold">
-                            {student.firstName?.[0] || ""}
-                            {student.lastName?.[0] || ""}
+                            {student.user?.firstName?.[0] || ""}
+                            {student.user?.lastName?.[0] || ""}
                           </span>
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">
-                            {student.firstName || ""} {student.lastName || ""}
+                            {student.user?.firstName || ""}{" "}
+                            {student.user?.lastName || ""}
                           </div>
                           <div className="text-sm text-gray-500">
-                            {student.phoneNumber || "N/A"}
+                            {student.user?.phoneNumber || "N/A"}
                           </div>
                         </div>
                       </div>
@@ -251,7 +252,7 @@ export default function AdminStudentsPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        {student.email}
+                        {student.user?.email}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

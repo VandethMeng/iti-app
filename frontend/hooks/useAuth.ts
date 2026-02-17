@@ -24,7 +24,7 @@ export function useAuth(options: UseAuthOptions = {}) {
     const checkAuth = () => {
       // Check if user is logged in
       const authenticated = authUtils.isAuthenticated();
-      const userRole = authUtils.getRole();
+      const userRole = authUtils.getRole() as UserRole | null;
 
       setIsAuthenticated(authenticated);
 
@@ -62,6 +62,6 @@ export function useAuth(options: UseAuthOptions = {}) {
     isLoading,
     wrongRole,
     user: authUtils.getUser(),
-    role: authUtils.getRole(),
+    role: authUtils.getRole() as UserRole | null,
   };
 }

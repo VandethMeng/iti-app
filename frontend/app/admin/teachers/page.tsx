@@ -42,10 +42,10 @@ export default function AdminTeachersPage() {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
         (teacher) =>
-          teacher.firstName.toLowerCase().includes(query) ||
-          teacher.lastName.toLowerCase().includes(query) ||
-          teacher.email.toLowerCase().includes(query) ||
-          teacher.teacherId.toLowerCase().includes(query),
+          teacher.user?.firstName?.toLowerCase().includes(query) ||
+          teacher.user?.lastName?.toLowerCase().includes(query) ||
+          teacher.user?.email?.toLowerCase().includes(query) ||
+          teacher.employeeId.toLowerCase().includes(query),
       );
     }
 
@@ -102,12 +102,9 @@ export default function AdminTeachersPage() {
         </div>
         <div className="bg-blue-50 rounded-lg shadow p-6">
           <div className="text-2xl font-bold text-blue-800">
-            {teachers.reduce(
-              (sum, teacher) => sum + (teacher.courses?.length || 0),
-              0,
-            )}
+            {new Set(teachers.map((t) => t.department)).size}
           </div>
-          <div className="text-blue-700">Total Courses Taught</div>
+          <div className="text-blue-700">Departments</div>
         </div>
       </div>
 
@@ -170,32 +167,32 @@ export default function AdminTeachersPage() {
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10 bg-green-100 rounded-full flex items-center justify-center">
                           <span className="text-green-600 font-semibold">
-                            {teacher.firstName[0]}
-                            {teacher.lastName[0]}
+                            {teacher.user?.firstName?.[0] || ""}
+                            {teacher.user?.lastName?.[0] || ""}
                           </span>
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">
-                            {teacher.firstName} {teacher.lastName}
+                            {teacher.user?.firstName} {teacher.user?.lastName}
                           </div>
                           <div className="text-sm text-gray-500">
-                            {teacher.officeHours || "N/A"}
+                            {teacher.specialization || "N/A"}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">
-                        {teacher.teacherId}
+                        {teacher.employeeId}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        {teacher.email}
+                        {teacher.user?.email}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {teacher.phoneNumber || "N/A"}
+                      {teacher.user?.phoneNumber || "N/A"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
